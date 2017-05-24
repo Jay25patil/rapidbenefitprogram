@@ -105,8 +105,8 @@ window.App = {
     SendCoins: function() {
     var self = this;
 
-    var amount = parseInt(document.getElementById("amount").value);
-    var receiver = document.getElementById("receiver").value;
+    var amount = parseInt(document.getElementById("CoinAmount").value);
+    var receiver = document.getElementById("sendCoinReceiver").value;
 
     this.setStatus("Initiating transaction... (please wait)");
 
@@ -128,7 +128,10 @@ window.App = {
     var rapid;
     SmartCurrency.deployed().then(function(instance) {
       rapid = instance;
-      return rapid.getBalance.call(account, {from: account});
+      var coinAddress = document.getElementById("coinReceiver").value;
+
+      console.log("Coin Address: " + coinAddress);      
+      return rapid.getBalance.call(coinAddress, {from: account});
     }).then(function(value) {
       var balance_element = document.getElementById("checkBalance");
       balance_element.innerHTML = value.valueOf();
@@ -141,8 +144,8 @@ window.App = {
   SendShares: function() {
     var self = this;
 
-    var amount = parseInt(document.getElementById("amount").value);
-    var receiver = document.getElementById("receiver").value;
+    var amount = parseInt(document.getElementById("ShareAmount").value);
+    var receiver = document.getElementById("sendShareReceiver").value;
 
     this.setStatus("Initiating transaction... (please wait)");
 
@@ -152,7 +155,7 @@ window.App = {
       return rapid.SendShares(receiver, amount, {from: account});
     }).then(function(value) {
       self.setStatus("Transaction complete!");
-      self.refreshBalance();
+      self.refreshBalance1();
     }).catch(function(e) {
       console.log(e);
       self.setStatus("Error sending coin; see log.");
@@ -180,10 +183,11 @@ window.App = {
   GrantLeaves: function() {
     var self = this;
 
-    var amount = parseInt(document.getElementById("amount").value);
-    var receiver = document.getElementById("receiver").value;
+    var amount = parseInt(document.getElementById("LeaveAmount").value);
+    var receiver = document.getElementById("sendLeaveReceiver").value;
 
     this.setStatus("Initiating transaction... (please wait)");
+    console.log("Leave Sending: " + receiver + " " + amount);
 
     var rapid;
     SmartCurrency.deployed().then(function(instance) {
@@ -191,7 +195,7 @@ window.App = {
       return rapid.GrantLeaves(receiver, amount, {from: account});
     }).then(function(value) {
       self.setStatus("Transaction complete!");
-      self.refreshBalance();
+      self.refreshBalance2();
     }).catch(function(e) {
       console.log(e);
       self.setStatus("Error sending coin; see log.");
@@ -203,7 +207,10 @@ window.App = {
     var rapid;
     SmartCurrency.deployed().then(function(instance) {
       rapid = instance;
-      return rapid.checkleaves.call(account, {from: account});
+      var leaveAddress = document.getElementById("leaveReceiver").value;
+
+      console.log("Leave Address: " + leaveAddress);
+      return rapid.checkleaves.call(leaveAddress, {from: account});
     }).then(function(value) {
       var balance_element = document.getElementById("checkLeaves");
       balance_element.innerHTML = value.valueOf();

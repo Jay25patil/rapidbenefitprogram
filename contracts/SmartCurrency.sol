@@ -28,7 +28,7 @@ function SendCoins(address receiver,uint amount)returns(bool sufficient){
 
 function getBalance(address addr) returns(uint) {
         return balances[addr];
-    }
+}
      
 function SendShares(address receiver,uint amount)returns(bool sufficient){
         if (shares[msg.sender] < amount) return false;
@@ -47,10 +47,10 @@ function checkshares(address addr) returns(uint) {
 }
 
 function GrantLeaves(address receiver,uint amount)returns(bool sufficient){
-         if(leaves[msg.sender]< amount)return false;
+         if(leaves[msg.sender] < amount)return false;
          leaves[msg.sender] -= amount;
          leaves[msg.sender] += amount;
-         Transfer(msg.sender,receiver,amount);
+         Transfer(msg.sender, receiver, amount);
          return true;
         
 }
