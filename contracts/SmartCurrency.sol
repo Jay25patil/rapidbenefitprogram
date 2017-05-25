@@ -1,6 +1,6 @@
 pragma solidity ^0.4.4;
 
-import "./ConvertLib.sol";
+//import "./ConvertLib.sol";
 
 contract SmartCurrency  {
 mapping (address => uint256) shares;
@@ -47,9 +47,9 @@ function checkshares(address addr) returns(uint) {
 }
 
 function GrantLeaves(address receiver,uint amount)returns(bool sufficient){
-         if(leaves[msg.sender] < amount)return false;
+         if(leaves[msg.sender] < amount) return false;
          leaves[msg.sender] -= amount;
-         leaves[msg.sender] += amount;
+         leaves[receiver] += amount;
          Transfer(msg.sender, receiver, amount);
          return true;
         
@@ -61,5 +61,6 @@ function GrantLeaves(address receiver,uint amount)returns(bool sufficient){
 
 function checkleaves(address addr) returns(uint) {        
         return leaves[addr];
-    }
+}
+
 }
